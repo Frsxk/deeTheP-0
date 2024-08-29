@@ -52,12 +52,23 @@ def execute_login():
     attempt = 0
     succeed = False
     while attempt < 3 and not succeed:
-        npm = input("Masukkan NPM mahasiswa admin yang telah terdaftar:")
+        npm = input("Masukkan NPM mahasiswa admin yang telah terdaftar: ")
         # TODO 1: Implementasi fungsi untuk mengecek apakah NPM yang dimasukkan merupakan NPM mahasiswa admin.
         # HINT: Gunakan variabel succeed dengan mengubah nilainya menjadi True jika NPM ditemukan.
-
+        if len(npm) != 10:
+            print('NPM harus berjumlah 10 angka!')
+            attempt += 1
+            continue
+        elif npm.isalpha:
+            print('NPM tidak terdaftar sebagai admin!')
+            attempt += 1
+            continue
+        succeed = True
+        
         # TODO 2: Implementasi fungsi untuk mengecek apakah percobaan login sudah mencapai 3 kali.
         # HINT: Increment variabel attempt jika login gagal. Jika sudah mencapai 3 kali, ubah status variabel yang bersangkutan pada fungsi lainnya.
+        if attempt == 3:
+            banned = True
     print()
     return attempt # Value yang di-return digunakan pada main untuk menandakan jumlah percobaan login.
 
@@ -75,6 +86,8 @@ def execute_suspect():
         code = input("Masukkan kode mahasiswa tersangka: ")
         # TODO: Implementasi fungsi yang memvalidasi input code.
         # Hint: Gunakan if else statement untuk memvalidasi input code.
+        if code in list_code:
+            break
         break
 
     while True:
@@ -84,14 +97,23 @@ def execute_suspect():
         '''HINT: Input time memiliki panjang 5 karakter, dengan elemen pada 2 index pertama dan 2 terakhir harus berupa angka.
         Anda dapat menggunakan method .isdigit(). Elemen pada 2 index pertama tidak boleh lebih dari 24, serta pada 2 terakhir
         tidak boleh lebih dari 60.'''
-        break
+        
+        if time.isdigit() and int(time[:2]) <= 24 and int(time[-2:]) <= 60:
+            break
+        else:
+            print("Input waktu tidak valid!")
+            continue
 
     while True:
         level = input("Masukkan dugaan lokasi (lantai) kejadian: ")
         # TODO: Implementasi fungsi yang memvalidasi input level.
         # HINT: Gunakan if else statement untuk memvalidasi input level.
         # HINT: Input level harus berupa angka dan tidak boleh lebih dari 7 serta tidak boleh kurang dari 0.
-        break
+        if level.isdigit() and int(level) <= 7 and int(level) >= 0:
+            break
+        else:
+            print("Input lokasi tidak valid!")
+            continue
 
     num_code = int(code[-2:])
     num_time = int(time[:2]) * 60 + int(time[-2:])
