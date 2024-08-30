@@ -14,38 +14,106 @@ def authorized(logged: bool, banned: bool) -> bool:
         print("Silakan untuk login terlebih dahulu.\n")
         return False
     if banned == True:
-        # HINT: Variable "banned" diubah statusnya pada fungsi yang bertujuan untuk mengecek percobaan login.
         print("Maaf, Anda telah gagal login 3 kali. Silakan keluar.\n")
         return False
     return True
 
-# Fungsi untuk meminta data mahasiswa admin. Belum diimplementasikan.
-# HINT: Impelementasikan logika loop yang sudah dipelajari pada pekan-pekan sebelumnya.
-# Gunakan fungsi/method list yang sesuai untuk menambah elemen ke list.
+# Fungsi untuk meminta data mahasiswa admin.
 def ask_admin():
     student = int(input(f"Masukkan banyaknya mahasiswa admin: "))
-    # TODO: Implementasi fungsi untuk meminta input NPM mahasiswa dan menyimpannya di "list_admin".
-    print()
+    # Menggunakan For Loop dan infinite loop untuk mengulang program sebanyak mahasiswa admin
+    for i in range(student):
+            while True:
+                npm = input("Masukkan NPM admin: ")
+                if not npm.isdigit():
+                    print('NPM harus berupa angka!')
+                    continue
+                if len(npm) != 10:
+                    print('NPM harus berjumlah 10 angka!')
+                    continue
+                list_admin.append(npm)
+                print(f'NPM {npm} berhasil menjadi mahasiswa admin.\n')
+                break
 
-# Fungsi untuk meminta data mahasiswa tersangka. Bel um diimplementasikan.
-# HINT: Impelementasikan logika loop yang sudah dipelajari pada pekan-pekan sebelumnya.
-# Gunakan fungsi/method list yang sesuai untuk menambah elemen ke list.
+# Fungsi untuk meminta data mahasiswa tersangka.
 def ask_suspected():
-    student = int(input("Masukkan banyaknya mahasiswa tersangka: "))
-    # TODO: Implementasi fungsi untuk meminta input NPM mahasiswa dan menyimpannya di "list_suspected".
-    print()
+    while True:
+        student = int(input("Masukkan banyaknya mahasiswa tersangka: "))
+        if student > 999999:
+            print('Mahasiswa tersangka tidak boleh lebih dari 999999 orang!')
+            continue
+        elif student < 4:
+            print("Mahasiswa tersangka harus minimal 4 orang!")
+            continue
+        break
+    # Menggunakan For Loop dan infinite loop untuk mengulang program sebanyak mahasiswa tersangka.
+    for i in range(student):
+        while True:
+            npm = input("Masukkan NPM tersangka: ")
+            if not npm.isdigit():
+                print('NPM harus berupa angka!')
+                continue
+            if len(npm) != 10:
+                print('NPM harus berjumlah 10 angka!')
+                continue
+            list_suspected.append(npm) # Menyimpan data di list_suspected.
+            print(f'NPM {npm} berhasil menjadi mahasiswa tersangka.\n')
+            break
 
-# Fungsi untuk meminta data yang terekam CCTV. Belum diimplementasikan.
-# HINT: Impelementasikan input dan logika loop yang sudah dipelajari pada pekan-pekan sebelumnya.
-# Gunakan fungsi/method list yang sesuai untuk menambah elemen ke list.
+# Fungsi untuk memvalidasi waktu, menghasilkan boolean
+def is_time_valid(time_string) -> bool:
+    if len(time_string) != 5 or time_string[2] != ':':
+        return False
+    
+    hour = time_string[:2]
+    minute = time_string[-2:]
+
+    if not (hour.isdigit() and minute.isdigit()):
+        return False
+    if not int(time_string[:2]) <= 24 and not int(time_string[-2:]) <= 60:
+        return False
+    return True
+
+# Fungsi untuk meminta data yang terekam CCTV.
 def ask_case():
     case = int(input(f"Masukkan banyaknya data yang terekam CCTV: "))
-    # TODO 1: Implementasi fungsi untuk meminta input nama, waktu, dan lantai tempat terdeteksi mahasiswa.
-    # TODO 2: Simpan input ke dalam list yang bersesuaian.
-    # TODO 3: Gunakan string formatting yang sesuai untuk membuat kode mahasiswa. Kemudian, simpan ke dalam "list_code".
-
-    # HINT: Iterasi dengan loop sebanyak input case.
-    print()
+    # Fungsi untuk meminta input nama, waktu, dan lantai tempat terdeteksi mahasiswa.
+    while True:
+        if case > 99:
+            print("Banyak data tidak boleh lebih dari 99")
+            continue
+        break
+    
+    counter = 1
+    for i in range(case):
+        while True:
+            nama = input("Masukkan nama mahasiswa: ")
+            if len(nama) > 10:
+                print("Nama tidak boleh lebih panjang dari 10 karakter!")
+                continue
+            waktu = input("Masukkan waktu mahasiswa terlihat: ")
+            if not is_time_valid(waktu):
+                print("Input waktu tidak valid!")
+                continue
+            lantai = input("Masukkan lantai tempat mahasiswa terdeteksi: ")
+            if not (lantai.isdigit() and int(lantai) <= 7 and int(lantai) >= 0):
+                print("Input lantai tidak valid!")
+                continue
+            print()
+        # TODO 2: Simpan input ke dalam list yang bersesuaian.
+            list_name.append(nama)
+            list_time.append(waktu)
+            list_level.append(lantai)
+        # TODO 3: Gunakan string formatting yang sesuai untuk membuat kode mahasiswa. Kemudian, simpan ke dalam "list_code".
+            x = lantai
+            if counter < 10:
+                y = '0' + str(counter)
+            else:
+                y = str(counter)
+            kode_mahasiswa = x+y
+            list_code.append(kode_mahasiswa)
+            counter += 1
+            break
 
 # Fungsi untuk menjalankan menu login pada opsi menu 1. Belum diimplementasikan.
 def execute_login():
@@ -53,62 +121,54 @@ def execute_login():
     succeed = False
     while attempt < 3 and not succeed:
         npm = input("Masukkan NPM mahasiswa admin yang telah terdaftar: ")
-        # TODO 1: Implementasi fungsi untuk mengecek apakah NPM yang dimasukkan merupakan NPM mahasiswa admin.
-        # HINT: Gunakan variabel succeed dengan mengubah nilainya menjadi True jika NPM ditemukan.
+        # Fungsi untuk mengecek apakah NPM yang dimasukkan merupakan NPM mahasiswa admin.
         if len(npm) != 10:
             print('NPM harus berjumlah 10 angka!')
             attempt += 1
             continue
-        elif npm.isalpha:
+        if not npm in list_admin:
             print('NPM tidak terdaftar sebagai admin!')
             attempt += 1
             continue
         succeed = True
         
-        # TODO 2: Implementasi fungsi untuk mengecek apakah percobaan login sudah mencapai 3 kali.
-        # HINT: Increment variabel attempt jika login gagal. Jika sudah mencapai 3 kali, ubah status variabel yang bersangkutan pada fungsi lainnya.
+        # Cek apakah percobaan login sudah mencapai 3 kali, dan mengubah variabel 'banned'
         if attempt == 3:
             banned = True
     print()
     return attempt # Value yang di-return digunakan pada main untuk menandakan jumlah percobaan login.
 
-# Fungsi untuk menjalankan menu yang menampilkan riwayat CCTV pada menu 2. Belum diimplementasikan.
-# HINT: Anda hanya perlu menambahkan argumen yang bersesuaian pada fungsi print() yang sudah diimplementasikan.
+# Fungsi untuk menjalankan menu yang menampilkan riwayat CCTV pada menu 2.
 def execute_logcheck():
     print("{:>4} | {:^10} | {:^7} | {:<15}".format("Kode", "Nama", "Waktu", "Lokasi (lantai)"))
     for i in range(len(list_code)):
-        print("{:>4} | {:<10} | {:^7} | {:<15}".format("")) # TODO: Masukkan argumen dengan mengambil list yang bersesuaian pada elemen ke-i.
-        print()
+        print("{:>4} | {:<10} | {:^7} | {:<15}".format(list_code[i], list_name[i], list_time[i], list_level[i]))
 
-# Fungsi untuk menghitung persentase kemungkinan tersangka pada menu 3. Belum diimplementasikan.
+# Fungsi untuk menghitung persentase kemungkinan tersangka pada menu 3.
 def execute_suspect():
     while True:
         code = input("Masukkan kode mahasiswa tersangka: ")
         # TODO: Implementasi fungsi yang memvalidasi input code.
-        # Hint: Gunakan if else statement untuk memvalidasi input code.
+        if len(code) != 3:
+            print('Kode yang dimasukkan tidak valid!')
         if code in list_code:
             break
-        break
-
+        else:
+            print('Kode yang dimasukkan tidak valid!')
+            continue
+    
     while True:
         time = input("Masukkan dugaan waktu kejadian: ")
-        # TODO: Implementasi fungsi yang memvalidasi input time.
-        # HINT: Gunakan if else statement serta string slicing untuk memvalidasi input time.
-        '''HINT: Input time memiliki panjang 5 karakter, dengan elemen pada 2 index pertama dan 2 terakhir harus berupa angka.
-        Anda dapat menggunakan method .isdigit(). Elemen pada 2 index pertama tidak boleh lebih dari 24, serta pada 2 terakhir
-        tidak boleh lebih dari 60.'''
-        
-        if time.isdigit() and int(time[:2]) <= 24 and int(time[-2:]) <= 60:
+        # Menggunakan fungsi is_time_valid untuk memvalidasi input waktu.
+        if is_time_valid(time):
             break
         else:
-            print("Input waktu tidak valid!")
+            print('Input waktu tidak valid!')
             continue
 
     while True:
         level = input("Masukkan dugaan lokasi (lantai) kejadian: ")
-        # TODO: Implementasi fungsi yang memvalidasi input level.
-        # HINT: Gunakan if else statement untuk memvalidasi input level.
-        # HINT: Input level harus berupa angka dan tidak boleh lebih dari 7 serta tidak boleh kurang dari 0.
+        # Logika untuk memvalidasi input level.
         if level.isdigit() and int(level) <= 7 and int(level) >= 0:
             break
         else:
@@ -129,15 +189,14 @@ def execute_suspect():
 
     print(f"Berhasil meninjau tersangka pada mahasiswa dengan nama {list_suspected[num_code]} pada pukul {time} di lantai {level}.\n")
 
-# Fungsi untuk mencetak ringkasan tersangka pada menu 4. Belum diimplementasikan.
-# HINT: Anda hanya perlu menambahkan argumen yang bersesuaian pada fungsi print() yang sudah diimplementasikan.
+# Fungsi untuk mencetak ringkasan tersangka pada menu 4.
 def execute_summarize():
     if len(list_percentage) == 0:
         most_suspected = "Tidak ada"
     else:
         print("{:>6} | {:^10} | {:<25}".format("Dugaan", "Nama", "Persentase Menjadi Pelaku"))
         for i in range(len(list_result)):
-            print("{:>6} | {:<10} | {:<25}".format("")) # TODO: Masukkan argumen dengan mengambil list yang bersesuaian pada elemen ke-i. 
+            print("{:>6} | {:<10} | {:<25}".format(i+1, list_name[i], list_percentage[i])) 
             if sum(list_percentage) // len(list_percentage) >= 40:
                 index_name = list_percentage.index(max(list_percentage))
                 most_suspected = list_result[index_name]
