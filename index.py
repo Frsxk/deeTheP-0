@@ -1,3 +1,6 @@
+"""
+This file is mainly used for testing codes and output. Does not correspond to any of deeTheP-0 projects/weeks.
+"""
 
 # numbers = [2, 4, 6, 8, 10, 12, 15, 18, 20]
 
