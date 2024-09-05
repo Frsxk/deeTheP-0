@@ -1,5 +1,5 @@
 
-# Fungsi untuk mencetak tampilan menu utama. Sudah diimplementasikan.
+# Fungsi untuk mencetak tampilan menu utama.
 def main_menu():
     print("="*20 + " Selamat datang di PacilSeeker! " + "="*20 + "\n"
     "(1) Masuk\n"
@@ -8,7 +8,7 @@ def main_menu():
     "(4) Cetak ringkasan tersangka\n"
     "(5) Keluar")
 
-# Fungsi untuk mengecek apakah pengguna sudah login dan belum diblokir. Sudah diimplementasikan.
+# Fungsi untuk mengecek apakah pengguna sudah login dan belum diblokir.
 def authorized(logged: bool, banned: bool) -> bool:
     if logged == False:
         print("Silahkan untuk login terlebih dahulu.\n")
@@ -98,24 +98,24 @@ def ask_case():
                 print("Input lantai tidak valid!")
                 continue
 
-            # Simpan input ke dalam list yang bersesuaian.
-            list_name.append(nama)
-            list_time.append(waktu)
-            list_level.append(lantai)
-
             # Gunakan string formatting yang sesuai untuk membuat kode mahasiswa. Kemudian, simpan ke dalam "list_code".
             x = lantai
             if counter < 10:
                 y = '0' + str(counter)
             else:
                 y = str(counter)
+            if nama in list_name and i > 0:
+                y ='0' + str(i - 1)
+                list_code[i-1] = list_code[i-1][:2] + str(j)
             kode_mahasiswa = x + str(y)
+
+            # Simpan input ke dalam list yang bersesuaian.
+            list_name.append(nama)
+            list_time.append(waktu)
+            list_level.append(lantai)
             list_code.append(kode_mahasiswa)
             counter += 1
             break
-        # if nama in list_suspected and i > 0:
-        #     y ='0' + str(list_name.index(nama) + 1)
-        #     list_code[i-1] = list_code[i-1][:2] + str(j)
     print()
 
 # Fungsi untuk menjalankan menu login pada opsi menu 1.
@@ -189,7 +189,6 @@ def execute_suspect():
     percentage = max((mux_code + (45 - abs(871 - num_time)) + (40 - abs(2 - num_level) * 5)), 0)
     list_result.append(list_name[num_code])
     list_percentage.append(percentage)
-    print(list_result, list_percentage, list_suspected)
 
     print(f"Berhasil meninjau tersangka pada mahasiswa dengan nama {list_name[num_code]} pada pukul {time} di lantai {level}.\n")
 
