@@ -1,25 +1,19 @@
-"""
-This file is mainly used for testing codes and output. Does not correspond to any of deeTheP-0 projects/weeks.
-"""
+import turtle as t
 
-# numbers = [2, 4, 6, 8, 10, 12, 15, 18, 20]
+# Create a turtle object
+my_turtle = t.Turtle()
 
-# for number in numbers:
-#     print(number)
-#     if (number % 2 == 1):
-#         break
+# Move the turtle and draw
+my_turtle.pendown()
+# maroon yellow
+for i in range(4):
+    my_turtle.pencolor("maroon")
+    my_turtle.forward(5)
 
-# for i in range(5):
-#     for j in range(i):
-#         print('*', end='')
-#     print('*')
 
-# for i in range(2, 4):
-#     for j in range(1, 11):
-#         print(i, "*", j, "=", i*j)
-#     print("")
+# Print the position of the turtle
+print(my_turtle.position())
 
-# a = 30
-# b = 20
-# a, b = b, a
-# print(a, b)
+# Set up the screen to exit on click
+sc = t.Screen()
+sc.exitonclick()
