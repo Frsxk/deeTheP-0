@@ -2,7 +2,7 @@ import turtle as t
 import random
 
 def initialize_turtle():
-    # TODO: Lengkapi fungsi untuk menggambar tabel dan objek tersangka
+    # Fungsi untuk menggambar tabel dan objek tersangka
     pen.pendown()
     pen.hideturtle()
     pen.penup()
@@ -69,11 +69,13 @@ def initialize_turtle():
         pen.right(180)
         move, move_small, turn = move *-1, move_small *-1, turn *-1
     
-    list_index.clear()
+    # Menggambar bentuk dengan menggunakan fungsi plot_point()
+    list_index.clear() # Agar list_index tidak berisi data dobel dalam pemanggilan initialize_turtle() yang selanjutnya
     for k in list_nama:
         plot_point(k)
         list_index.append(count_index(k))
 
+    # Menulis teks
     pen.goto(0, 270)
     pen.write("Tingkat motif", False, align='center', font=('Arial', 8, 'normal'))
     pen.goto(270, 0)
@@ -90,12 +92,16 @@ def initialize_turtle():
     screen.mainloop()
 
 def seperate_coordinates(string):
+    # Fungsi untuk memisahkan dua string koordinat
+    # Contoh eksekusi: 13 -> [1, 3], 5-5 -> [5, -5] dst.
     result = []
     current = string[0]
 
+    # Cek apakah string tidak mengandung -
     if len(string) == 2 and current != '-':
         return [string[0], string[1]]
     
+    # Logika untuk memisah string
     for character in string[1:]:
         if character == '-' and current != '':
             result.append(current)
@@ -112,7 +118,7 @@ def seperate_coordinates(string):
     return result
 
 def plot_point(tersangka):
-    # TODO: Lengkapi fungsi untuk menggambar objek tersangka
+    # Fungsi untuk menggambar objek tersangka
     index = list_kombinasi[list_nama.index(tersangka)]
     motif = int(seperate_coordinates(index)[0])
     alibi = int(seperate_coordinates(index)[1])
@@ -137,10 +143,10 @@ def count_index(tersangka):
     return index_pelaku
 
 def draw_square(color, x, y, nama):
-    # TODO: Lengkapi fungsi untuk menggambar persegi
+    # Fungsi untuk menggambar persegi
     # Set up awal
-    posisi_x = x * 54
-    posisi_y = y * 45
+    posisi_x = (x * 50) + 10
+    posisi_y = (y * 50) - 10
     pen.setheading(0)
     pen.goto(posisi_x, posisi_y)
     pen.pendown()
@@ -162,10 +168,10 @@ def draw_square(color, x, y, nama):
     pen.home()
 
 def draw_triangle(color, x, y, nama):
-    # TODO: Lengkapi fungsi untuk menggambar segitiga
+    # Fungsi untuk menggambar segitiga
     # Set up awal
-    posisi_x = x * 50
-    posisi_y = y * 50
+    posisi_x = (x * 50) - 10
+    posisi_y = (y * 50) - 15
     pen.setheading(0)
     pen.goto(posisi_x, posisi_y)
     pen.pendown()
@@ -173,24 +179,24 @@ def draw_triangle(color, x, y, nama):
     pen.begin_fill()
 
     # Menggambar segitiga
-    for i in range(2):
-        pen.forward(20)
+    for i in range(3):
+        pen.forward(25)
         pen.left(120)
     pen.end_fill()
     pen.penup()
 
     # Menulis nama dan titik posisi
-    pen.goto(posisi_x+10, posisi_y+10)
+    pen.goto(posisi_x+25, posisi_y+10)
     pen.write(nama, False, align='left', font=('Arial', 8, 'normal'))
-    pen.goto(posisi_x+10, posisi_y)
+    pen.goto(posisi_x+25, posisi_y)
     pen.write(f"{str(x)}, {str(y)}", False, align='left', font=('Arial', 8, 'normal'))
     pen.home()
     
 def draw_diamond(color, x, y, nama):
-    # TODO: Lengkapi fungsi untuk menggambar belah ketupat
+    # Fungsi untuk menggambar belah ketupat
     # Set up awal
-    posisi_x = x * 54
-    posisi_y = y * 45
+    posisi_x = (x * 50) + 5
+    posisi_y = (y * 50) - 15
     pen.setheading(0)
     pen.goto(posisi_x, posisi_y)
     pen.pendown()
@@ -214,10 +220,10 @@ def draw_diamond(color, x, y, nama):
     pen.home()
 
 def draw_circle(color,x ,y, nama):
-    # TODO: Lengkapi fungsi untuk menggambar lingkaran
+    # Fungsi untuk menggambar lingkaran
     # Set up awal
-    posisi_x = x * 48
-    posisi_y = y * 48
+    posisi_x = (x * 50) - (x * 2)
+    posisi_y = (y * 50) - 10
     pen.setheading(0)
     pen.goto(posisi_x, posisi_y)
     pen.pendown()
@@ -290,7 +296,6 @@ while True:
         print("-"*40)
 
     elif choice == "2":
-        # TODO: Lengkapi opsi 2
         if len(list_nama) > 0:
             # Memastikan screen turtle dapat ditutup dan digunakan kembali
             try:
@@ -305,12 +310,13 @@ while True:
             continue
 
     elif choice == "3":
-        # TODO: Lengkapi fungsi opsi 3
         print("Terima kasih telah menggunakan DekPenol Graphing.")
         exit()
-
     else:
         # Jika opsi selain 1-3
         print("Input tidak valid!")
         print("-" * 40)
         continue
+
+
+# DDP-0 ASIK BANGET!
