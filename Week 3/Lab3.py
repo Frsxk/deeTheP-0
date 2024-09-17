@@ -252,8 +252,8 @@ while True:
     # Tampilan menu utama program
     print("Pilihan:\n"
     "1) Tambah Tersangka\n"
-    "3) Cetak Grafis Tersangka\n"
-    "2) Exit\n" + "-"*40)
+    "2) Cetak Grafis Tersangka\n"
+    "3) Exit\n" + "-"*40)
 
     choice = input("Pilihan: ")
     print()
